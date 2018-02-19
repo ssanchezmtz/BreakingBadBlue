@@ -42,7 +42,7 @@ public class Bar extends Item{
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
+        g.setColor(Color.red);
         g.fillRect(getX(), getY(), getWidth(), getHeight());
     }
 }
