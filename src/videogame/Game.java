@@ -86,7 +86,7 @@ public class Game implements Runnable {
          for (int i = 0; i < 10; i++) {
              for (int j = 0; j < 5; j++) {
                  Brick brick = new Brick(i * (width_brick + 3) + 15 , 
-                         j * (height_brick + 5) + 15 , width_brick, height_brick, this);
+                         j * (height_brick + 5) + 15 , width_brick, height_brick, 3, this);
                  bricks.add(brick);
              }
          }
@@ -133,8 +133,8 @@ public class Game implements Runnable {
         // if space and game has not started
         if (this.getKeyManager().space && !this.isStarted()) {
             this.setStarted(true);
-            ball.setSpeedX(1);
-            ball.setSpeedY(-1);
+            ball.setSpeedX(3);
+            ball.setSpeedY(-3);
         } 
         // moving bar
         bar.tick();
@@ -150,10 +150,20 @@ public class Game implements Runnable {
         // check collision bricks versus ball
         for (int i = 0; i < bricks.size(); i++) {
             Brick brick = (Brick) bricks.get(i);
-            if (ball.intersects(brick)) {
+            if (ball.intersects(brick) && brick.getPower()==3) {
+                brick.setPower(brick.getPower()-1);
+                ball.setSpeedY(ball.getSpeedY() * -1);
+            }else if(ball.intersects(brick) && brick.getPower()==2){
+                brick.setPower(brick.getPower()-1);
+                ball.setSpeedY(ball.getSpeedY() * -1);
+            }
+            else if(ball.intersects(brick) && brick.getPower()==1){
+                brick.setPower(brick.getPower()-1);
+                ball.setSpeedY(ball.getSpeedY() * -1);
+            }else if(ball.intersects(brick) && brick.getPower()==0){
                 bricks.remove(brick);
                 ball.setSpeedY(ball.getSpeedY() * -1);
-                i--;
+                i--;                
             }
         }
         
