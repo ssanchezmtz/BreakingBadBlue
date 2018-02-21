@@ -17,20 +17,44 @@ import java.awt.Graphics;
 public class Brick extends Item{
 
     private Game game;
+    private int power;
     
-    public Brick(int x, int y, int width, int height, Game game) {
+    
+    public Brick(int x, int y, int width, int height, int power ,Game game) {
         super(x, y, width, height);
         this.game = game;
+        this.power = power;
     }
 
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+    
+    public Brick copy(Brick brick){
+        
+        Brick other = new Brick(brick.getX(),brick.getY(),brick.getWidth(),brick.getHeight(),brick.getPower()-1,brick.game);
+                
+        return other;
+    }
+    
     @Override
     public void tick() {
     }
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.blue);
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
+        if(this.getPower()==3){
+            g.drawImage(Assets.brick1, getX(), getY(), getWidth(), getHeight(), null);
+        }else if (this.getPower() == 2){
+            g.drawImage(Assets.brick2, getX(), getY(), getWidth(), getHeight(), null);
+        }else if (this.getPower() == 1){
+            g.drawImage(Assets.brick3, getX(), getY(), getWidth(), getHeight(), null);            
+        }
+
     }
 }
     
