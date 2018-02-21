@@ -26,9 +26,9 @@ public class Game implements Runnable {
     private Thread thread;          // thread to create the game
     private boolean running;        // to set the game
     private boolean started;        // to start the game
-    private Bar bar;          // to use a bar
+    private Bar bar;                // to use a bar
     private Ball ball;              // little ball
-    private ArrayList<Brick> bricks; // bricks
+    private ArrayList<Brick> bricks;// bricks
     private KeyManager keyManager;  // to manage the keyboard
     
     
@@ -135,7 +135,7 @@ public class Game implements Runnable {
             this.setStarted(true);
             ball.setSpeedX(1);
             ball.setSpeedY(-1);
-        } 
+        }
         // moving bar
         bar.tick();
         // if game has started
@@ -157,11 +157,34 @@ public class Game implements Runnable {
             }
         }
         
-        // check collision ball versus bar
+        // check collision ball versus bar and modify speed accordingly
+        // the x-speed and y-speed of the ball can never be 0
         if (ball.intersects(bar)) {
+            ball.setY(bar.getY() - 21);
             ball.setSpeedY(ball.getSpeedY() * -1);
+            if(this.getKeyManager().left || this.getKeyManager().right){
+                // speed up
+                if(ball.getSpeedX() > 0){
+                    ball.setSpeedX(ball.getSpeedX() + 1);
+                }
+                else{
+                    ball.setSpeedX(ball.getSpeedX() - 1);
+                }
+                ball.setSpeedY(ball.getSpeedY() - 1);
+            }
+            else{
+                // slow down
+                if(ball.getSpeedX() > 0 && ball.getSpeedX() != 1){
+                    ball.setSpeedX(ball.getSpeedX() - 1);
+                }
+                else if(ball.getSpeedX() < 0 && ball.getSpeedX() != -1){
+                    ball.setSpeedX(ball.getSpeedX() + 1);
+                }
+                if(ball.getSpeedY() != -1){
+                    ball.setSpeedY(ball.getSpeedY() + 1);
+                }
+            }
         }
-
     }
     
     private void render() {
