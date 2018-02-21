@@ -133,15 +133,9 @@ public class Game implements Runnable {
         // if space and game has not started
         if (this.getKeyManager().space && !this.isStarted()) {
             this.setStarted(true);
-<<<<<<< HEAD
             ball.setSpeedX(1);
             ball.setSpeedY(-1);
         }
-=======
-            ball.setSpeedX(3);
-            ball.setSpeedY(-3);
-        } 
->>>>>>> design
         // moving bar
         bar.tick();
         // if game has started
